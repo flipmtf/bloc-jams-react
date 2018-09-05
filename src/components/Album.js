@@ -13,13 +13,14 @@ class Album extends Component {
     this.state = {
       album: album
     };
+
   }
 
   render() {
     return (
       <section className="album">
         <section id="album-info">
-          <img id="album-cover-art" src={this.state.album.albumCover} alt={this.state.album.title}/>
+          <img id="album-cover-art" src={this.state.album.albumCover} alt={this.state.album.title} />
           <div className="album-details">
             <h1 id="album-title">{this.state.album.title}</h1>
             <h2 className="artist">{this.state.album.artist}</h2>
@@ -31,18 +32,18 @@ class Album extends Component {
             <col id="song-number-column" />
             <col id="song-title-column" />
             <col id="song-duration-column" />
-          </colgroup
+          </colgroup>
           <tbody>
             {
-              this.state.albums.map( (album, index) =>
-                <Link to={`/album/${album.slug}`} key={index}>
+              this.state.album.songs.map( (songs, index) =>
+                <Link to={`/songs/${songs.slug}`}  key={index}>
                   <tr>
-                    <td>"Number will go here"</td>
-                    <td key={title}>{album.songs.title}</td>
-                    <td key={duration}>{album.songs.duration} "seconds"</td>
+                    <td>{songs.number}</td>
+                    <td>{songs.title}</td>
+                    <td>{songs.duration} seconds</td>
                   </tr>
                 </Link>
-              );
+              )
             }
           </tbody>
         </table>
