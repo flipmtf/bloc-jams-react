@@ -36,13 +36,11 @@ class Album extends Component {
           <tbody>
             {
               this.state.album.songs.map( (songs, index) =>
-                <Link to={`/songs/${songs.slug}`}  key={index}>
-                  <tr>
-                    <td>{songs.number}</td>
-                    <td>{songs.title}</td>
+                  <tr key={index}>
+                    <td>{index+1}</td>
+                    <td><Link to={`/songs/${songs.slug}`}>{songs.title}</Link></td>
                     <td>{songs.duration} seconds</td>
                   </tr>
-                </Link>
               )
             }
           </tbody>
