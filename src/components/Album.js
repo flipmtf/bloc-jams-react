@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import albumData from './../data/albums';
 
 class Album extends Component {
@@ -18,6 +17,8 @@ class Album extends Component {
 
     this.audioElement = document.createElement('audio');
     this.audioElement.src = album.songs[0].audioSrc;
+    this.mouseEnter = this.mouseEnter.bind(this);
+    this.mouseLeave = this.mouseLeave.bind(this);
   }
 
   play() {
@@ -45,6 +46,18 @@ class Album extends Component {
     }
   }
 
+  mouseEnter() {
+    this.setState(prevState => ({
+      isSameSong: prevState.isSameSong
+    }))
+  }
+
+  mouseLeave() {
+    this.setState(prevState => ({
+      isSameSong: prevState.isSameSong
+    }))
+  }
+
   render() {
     return (
       <section className="album">
@@ -66,7 +79,15 @@ class Album extends Component {
             {
               this.state.album.songs.map( (songs, index) =>
                   <tr className="songs" key={index} onClick={() => this.handleSongClick(songs)} >
-                    <td>{index+1}</td>
+                    <td>
+                      if (this.state.isPlaying) {
+                        <p><span className="ion-pause"></span></p>
+                      } else if (this.state.isPaused) {
+                        <p><span className="ion-play"></span></p>
+                      } else {
+                        "numbers"
+                      }
+                    </td>
                     <td>{songs.title}</td>
                     <td>{songs.duration} seconds</td>
                   </tr>
