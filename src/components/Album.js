@@ -16,12 +16,12 @@ class Album extends Component {
       currentTime: 0,
       duration: album.songs[0].duration,
       currentVolume: 80,
-      volume: album.songs[0].volume,
       isPlaying: false
     };
 
     this.audioElement = document.createElement('audio');
     this.audioElement.src = album.songs[0].audioSrc;
+    this.audioElement.volume = this.state.currentVolume
   }
 
   play() {
@@ -43,16 +43,13 @@ class Album extends Component {
         this.setState({ duration: this.audioElement.duration });
       },
       volumeupdate: e => {
-        this.setState({ currentVolume: this.audioElement.currentVolume });
-      },
-      volumechange: e => {
-        this.setState({ volume: this.audioElement.volume });
+        this.setState({ currentVolume: e.target.value });
+        this.audioElement.volume = e.target.value;
       },
     };
     this.audioElement.addEventListener('timeupdate', this.eventListeners.timeupdate);
     this.audioElement.addEventListener('durationchange', this.eventListeners.durationchange);
     this.audioElement.addEventListener('volumeupdate', this.eventListeners.volumeupdate);
-    this.audioElement.addEventListener('volumechange', this.eventListeners.volumechange);
   }
 
   componentWillUnmount() {
@@ -60,7 +57,6 @@ class Album extends Component {
     this.audioElement.removeEventListener('timeupdate', this.eventListeners.timeupdate);
     this.audioElement.removeEventListener('durationchange', this.eventListeners.durationchange);
     this.audioElement.removeEventListener('volumeupdate', this.eventListeners.volumeupdate);
-    this.audioElement.removeEventListener('volumechange', this.eventListeners.volumechange);
   }
 
   setSong(song) {
@@ -76,6 +72,15 @@ class Album extends Component {
       if (!isSameSong) { this.setSong(song); }
       this.play();
     }
+  }
+
+  mouseEnter() {
+    const hoveredSong = this.state.currentSong.onMouseEnter(song => this.state.currentSong === song);
+    this.setState({ currentSong: song});
+  }
+
+  mouseLeave() {
+    this.setState({currentSong: song});
   }
 
   handlePrevClick() {
@@ -101,7 +106,7 @@ class Album extends Component {
   }
 
   handleVolumeChange(e) {
-    const newVol = this.audioElement.volume * e.target.value;
+    const newVol = e.target.value;
     this.audioElement.currentVolume = newVol;
     this.setState({ currentVolume: newVol });
   }
@@ -127,7 +132,17 @@ class Album extends Component {
             {
               this.state.album.songs.map( (songs, index) =>
                   <tr className="songs" key={index} onClick={() => this.handleSongClick(songs)} >
-                    <td><span className={this.state.isPlaying ? 'ion-pause' : 'ion-play'}></span></td>
+                    <td onMouseEnter={() => this.mouseEnter(song)} onMouseLeave={() => this.mouseLeave(song)}>
+                      {(this.state.currentSong === song
+                        <span className={'ion-play'}></span>
+                      )}
+                      {(this.state.currentSong === song
+                         <span className={'ion-pause'}></span>
+                      )}
+                      {(this.state.currentSong !=== song
+                         {index+1}
+                      )}
+                    </td>
                     <td>{songs.title}</td>
                     <td>{songs.duration} seconds</td>
                   </tr>
@@ -146,7 +161,7 @@ class Album extends Component {
           handlePrevClick={() => this.handlePrevClick()}
           handleNextClick={() => this.handleNextClick()}
           handleTimeChange={(e) => this.handleTimeChange(e)}
-          handleVolumeChange={(e) => this.handleVolumeChange(e)}
+          handleVolumeChange={(e) => this.handleVolumeUpdate(e)}
         />
       </section>
     );
