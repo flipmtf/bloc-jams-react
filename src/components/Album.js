@@ -15,7 +15,7 @@ class Album extends Component {
       currentSong: album.songs[0],
       currentTime: 0,
       duration: album.songs[0].duration,
-      currentVolume: 80,
+      currentVolume: .80,
       isPlaying: false
     };
 
@@ -75,11 +75,13 @@ class Album extends Component {
   }
 
   mouseEnter() {
+    var song = this.state.currentSong
     const hoveredSong = this.state.currentSong.onMouseEnter(song => this.state.currentSong === song);
     this.setState({ currentSong: song});
   }
 
   mouseLeave() {
+    var song = this.state.currentSong
     this.setState({currentSong: song});
   }
 
@@ -132,16 +134,16 @@ class Album extends Component {
             {
               this.state.album.songs.map( (songs, index) =>
                   <tr className="songs" key={index} onClick={() => this.handleSongClick(songs)} >
-                    <td onMouseEnter={() => this.mouseEnter(song)} onMouseLeave={() => this.mouseLeave(song)}>
-                      {(this.state.currentSong === song
+                    <td>
+                      {this.state.currentSong === songs && this.state.hoveredSong === songs ? (
                         <span className={'ion-play'}></span>
-                      )}
-                      {(this.state.currentSong === song
+                      ): ("numbers")}
+                      {this.state.currentSong === songs && this.state.hoveredSong !== songs ? (
                          <span className={'ion-pause'}></span>
-                      )}
-                      {(this.state.currentSong !=== song
-                         {index+1}
-                      )}
+                       ): ("numbers")}
+                      {this.state.currentSong !== songs && this.state.hoveredSong !== songs ? (
+                         "numbers"
+                      ) : ("numbers")}
                     </td>
                     <td>{songs.title}</td>
                     <td>{songs.duration} seconds</td>
@@ -161,7 +163,7 @@ class Album extends Component {
           handlePrevClick={() => this.handlePrevClick()}
           handleNextClick={() => this.handleNextClick()}
           handleTimeChange={(e) => this.handleTimeChange(e)}
-          handleVolumeChange={(e) => this.handleVolumeUpdate(e)}
+          handleVolumeChange={(e) => this.handleVolumeChange(e)}
         />
       </section>
     );
