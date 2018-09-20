@@ -16,7 +16,8 @@ class Album extends Component {
       currentTime: 0,
       duration: album.songs[0].duration,
       currentVolume: .80,
-      isPlaying: false
+      isPlaying: false,
+      hoveredSong: null
     };
 
     this.audioElement = document.createElement('audio');
@@ -74,15 +75,12 @@ class Album extends Component {
     }
   }
 
-  mouseEnter() {
-    var song = this.state.currentSong
-    const hoveredSong = this.state.currentSong.onMouseEnter(song => this.state.currentSong === song);
-    this.setState({ currentSong: song});
+  mouseEnter(song) {
+    this.setState({ hoveredSong: song});
   }
 
-  mouseLeave() {
-    var song = this.state.currentSong
-    this.setState({currentSong: song});
+  mouseLeave(song) {
+    this.setState({hoveredSong: null});
   }
 
   handlePrevClick() {
@@ -134,16 +132,16 @@ class Album extends Component {
             {
               this.state.album.songs.map( (songs, index) =>
                   <tr className="songs" key={index} onClick={() => this.handleSongClick(songs)} >
-                    <td>
-                      {this.state.currentSong === songs && this.state.hoveredSong === songs ? (
+                    <td onMouseEnter={() => this.mouseEnter(songs)} onMouseLeave={() => this.mouseLeave(songs)} >
+                      {this.state.currentSong === songs && this.state.hoveredSong === songs (
                         <span className={'ion-play'}></span>
-                      ): ("numbers")}
-                      {this.state.currentSong === songs && this.state.hoveredSong !== songs ? (
+                      )}
+                      {this.state.currentSong === songs && this.state.hoveredSong !== songs (
                          <span className={'ion-pause'}></span>
-                       ): ("numbers")}
-                      {this.state.currentSong !== songs && this.state.hoveredSong !== songs ? (
-                         "numbers"
-                      ) : ("numbers")}
+                       )}
+                      {this.state.currentSong !== songs && this.state.hoveredSong !== songs (
+                         {index}
+                      )}
                     </td>
                     <td>{songs.title}</td>
                     <td>{songs.duration} seconds</td>
