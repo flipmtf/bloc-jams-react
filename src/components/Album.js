@@ -12,7 +12,7 @@ class Album extends Component {
 
     this.state = {
       album: album,
-      currentSong: album.songs[0],
+      currentSong: null,
       currentTime: 0,
       duration: album.songs[0].duration,
       currentVolume: .80,
@@ -69,6 +69,7 @@ class Album extends Component {
     const isSameSong = this.state.currentSong === song;
     if (this.state.isPlaying && isSameSong) {
       this.pause();
+      this.setState({ currentSong: null });
     } else {
       if (!isSameSong) { this.setSong(song); }
       this.play();
@@ -107,6 +108,7 @@ class Album extends Component {
 
   handleVolumeChange(e) {
     const newVol = e.target.value;
+    console.log(newVol);
     this.audioElement.currentVolume = newVol;
     this.setState({ currentVolume: newVol });
   }
@@ -133,14 +135,14 @@ class Album extends Component {
               this.state.album.songs.map( (songs, index) =>
                   <tr className="songs" key={index} onClick={() => this.handleSongClick(songs)} >
                     <td onMouseEnter={() => this.mouseEnter(songs)} onMouseLeave={() => this.mouseLeave(songs)} >
-                      {this.state.currentSong === songs && this.state.hoveredSong === songs (
-                        <span className={'ion-play'}></span>
-                      )}
-                      {this.state.currentSong === songs && this.state.hoveredSong !== songs (
+                      {this.state.currentSong === songs && (
                         <span className={'ion-pause'}></span>
                       )}
-                      {this.state.currentSong !== songs && this.state.hoveredSong !== songs (
-                        <span>{index}</span>
+                      {this.state.currentSong !== songs && this.state.hoveredSong === songs && (
+                        <span className={'ion-play'}></span>
+                      )}
+                      {this.state.currentSong !== songs && this.state.hoveredSong !== songs && (
+                        <span>{index+1}</span>
                       )}
                     </td>
                     <td>{songs.title}</td>
@@ -155,8 +157,7 @@ class Album extends Component {
           currentSong={this.state.currentSong}
           currentTime={this.audioElement.currentTime}
           duration={this.audioElement.duration}
-          currentVolume={this.audioElement.currentVolume}
-          volume={this.audioElement.volume}
+          currentVolume={this.state.currentVolume}
           handleSongClick={() => this.handleSongClick(this.state.currentSong)}
           handlePrevClick={() => this.handlePrevClick()}
           handleNextClick={() => this.handleNextClick()}
