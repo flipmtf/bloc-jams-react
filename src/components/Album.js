@@ -113,17 +113,16 @@ class Album extends Component {
     this.setState({ currentVolume: newVol });
   }
 
-  formatTime(time) {
-    var time = this.state.currentTime;
-    var hours = Math.floor(time / 3600);
-    var minutes = Math.floor((time - (hours * 3600)) / 60 );
-    var seconds = time - (hours*3600) - (minutes *60);
-    seconds = Math.round(seconds * 100) / 100;
-    var result = (hours < 10 ? "0" + hours : hours);
-        result += "-" + (minutes < 10 ? "0" + minutes : minutes);
-        result += "-" + (seconds < 10 ? "0" + seconds : seconds);
-    console.log(time)
-    return result
+  formatTime(d) {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+
+    var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+    var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+    var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+    return hDisplay + mDisplay + sDisplay;
   }
 
   render() {
