@@ -114,16 +114,13 @@ class Album extends Component {
   }
 
   formatTime(d) {
-    this.audioElement.currentTime = d;
     d = Number(d);
-    var h = Math.floor(d / 3600);
     var m = Math.floor(d % 3600 / 60);
     var s = Math.floor(d % 3600 % 60);
 
-    var hDisplay = h > 0 ? h + (h === 1 ? " hour, " : " hours, ") : "";
-    var mDisplay = m > 0 ? m + (m === 1 ? " minute, " : " minutes, ") : "";
-    var sDisplay = s > 0 ? s + (s === 1 ? " second" : " seconds") : "";
-    return hDisplay + mDisplay + sDisplay;
+    var mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : "--:";
+    var sDisplay = s > 0 ? s + (s === 1 ? " " : " ") : "--";
+    return mDisplay + sDisplay;
   }
 
   render() {
@@ -159,7 +156,7 @@ class Album extends Component {
                       )}
                     </td>
                     <td>{songs.title}</td>
-                    <td>{songs.duration} seconds</td>
+                    <td>{this.formatTime(songs.duration)}</td>
                   </tr>
               )
             }
@@ -168,8 +165,8 @@ class Album extends Component {
         <PlayerBar
           isPlaying={this.state.isPlaying}
           currentSong={this.state.currentSong}
-          currentTime={this.audioElement.currentTime}
-          duration={this.audioElement.duration}
+          currentTime={this.formatTime(this.audioElement.currentTime)}
+          duration={this.formatTime(this.audioElement.duration)}
           currentVolume={this.state.currentVolume}
           handleSongClick={() => this.handleSongClick(this.state.currentSong)}
           handlePrevClick={() => this.handlePrevClick()}
