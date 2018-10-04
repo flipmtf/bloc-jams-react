@@ -120,6 +120,7 @@ class Album extends Component {
 
     var mDisplay = m > 0 ? m + (m === 1 ? ":" : ":") : "--:";
     var sDisplay = s > 0 ? s + (s === 1 ? " " : " ") : "--";
+        sDisplay = s > 0 && s < 10 ? "0" + s : s + (s === 1 ? " " : " ");
     return mDisplay + sDisplay;
   }
 
