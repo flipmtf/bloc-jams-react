@@ -44,8 +44,7 @@ class Album extends Component {
         this.setState({ duration: this.audioElement.duration });
       },
       volumeupdate: e => {
-        this.setState({ currentVolume: e.target.value });
-        this.audioElement.volume = e.target.value;
+        this.setState({ currentVolume: this.audioElement.volume });
       },
     };
     this.audioElement.addEventListener('timeupdate', this.eventListeners.timeupdate);
@@ -109,7 +108,7 @@ class Album extends Component {
   handleVolumeChange(e) {
     const newVol = e.target.value;
     console.log(newVol);
-    this.audioElement.currentVolume = newVol;
+    this.audioElement.volume = newVol;
     this.setState({ currentVolume: newVol });
   }
 
