@@ -4,16 +4,38 @@ body {
   font-family: sans-serif;
 }
 
+.App {
+  background: black;
+  margin: auto 10px;
+  width: auto;
+  height: 1500px;
+}
+
 .nav {
   float: left;
-  border: 2px solid white;
-  text-align: left;
-  padding: 10px;
-  background: red;
+  position: fixed;
+  list-style-type: none;
+  margin: 5px;
+  padding: 5px;
+  width: 100px;
+  background-color: red;
 }
 
 .title {
+  text-align: center;
+  color: red;
+}
+
+.landing {
   margin: auto;
   background: black;
   color: red;
+}
+
+.songs {
+  color: blue;
+}
+
+.player-bar {
+  color: blue;
 }
