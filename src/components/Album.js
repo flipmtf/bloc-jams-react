@@ -163,6 +163,7 @@ class Album extends Component {
           </tbody>
         </table>
         <PlayerBar
+          className="player-bar"
           isPlaying={this.state.isPlaying}
           currentSong={this.state.currentSong}
           currentTime={this.formatTime(this.audioElement.currentTime)}

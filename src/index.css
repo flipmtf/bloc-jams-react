@@ -3,3 +3,17 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.nav {
+  float: left;
+  border: 2px solid white;
+  text-align: left;
+  padding: 10px;
+  background: red;
+}
+
+.title {
+  margin: auto;
+  background: black;
+  color: red;
+}
