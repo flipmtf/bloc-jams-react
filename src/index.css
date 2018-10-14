@@ -32,10 +32,40 @@ body {
   color: red;
 }
 
+.album-image {
+  border: 5px solid white;
+}
+
+.song-title {
+  color: red;
+}
+
+.song-artist {
+  color: red;
+}
+
+.song-length {
+  color: red;
+}
+
+#album-cover-art {
+  border: 5px solid white;
+}
+
+#song-list {
+  width: 200px;
+  border: 1px solid red;
+  margin: 0 auto;
+}
+
 .songs {
-  color: blue;
+  text-align: center;
+  background-color: red;
+  color: black;
 }
 
 .player-bar {
-  color: blue;
+  margin: 5px;
+  padding: 5px;
+  color: white;
 }
